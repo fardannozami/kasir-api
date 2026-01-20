@@ -45,6 +45,9 @@ func getProductById(w http.ResponseWriter, r *http.Request) {
 			json.NewEncoder(w).Encode(p)
 			return
 		}
+
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("product not found"))
 	}
 }
 func updateProductById(w http.ResponseWriter, r *http.Request) {
@@ -75,6 +78,26 @@ func updateProductById(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func deleteProductById(w http.ResponseWriter, r *http.Request) {
+	idStr := strings.TrimPrefix(r.URL.Path, "/api/product/")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("invalid id"))
+		return
+	}
+
+	for i, p := range product {
+		if p.ID == id {
+			w.Header().Set("Content-Type", "application/json")
+			product = append(product[:i], product[i+1:]...)
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte("product delete successfully"))
+			return
+		}
+	}
+}
+
 func main() {
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
@@ -87,13 +110,15 @@ func main() {
 
 	// GET detail product http://localhost:8080/api/product/{id}
 	// PUT update product http://localhost:8080/api/product/{id}
+	// DELETE delete product http://localhost:8080/api/product/{id}
 	http.HandleFunc("/api/product/", func(w http.ResponseWriter, r *http.Request) {
-
 		switch r.Method {
 		case "GET":
 			getProductById(w, r)
 		case "PUT":
 			updateProductById(w, r)
+		case "DELETE":
+			deleteProductById(w, r)
 		}
 	})
 

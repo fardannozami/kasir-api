@@ -29,3 +29,8 @@ Accept: application/json
 GET http://localhost:8080/api/product/2
 Content-Type: application/octet-stream
 Accept: application/json
+
+### delete Product
+DELETE  http://localhost:8080/api/product/2
+Content-Type: application/octet-stream
+Accept: application/json
