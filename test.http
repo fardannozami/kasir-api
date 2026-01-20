@@ -1,0 +1,31 @@
+### Create Product
+POST http://localhost:8080/api/product
+Content-Type: application/octet-stream
+Accept: application/json
+
+{
+    "name": "Soto",
+    "price": 3000,
+    "stock": 200
+}
+
+### Update Product
+PUT http://localhost:8080/api/product/2
+Content-Type: application/octet-stream
+Accept: application/json
+
+{
+    "name": "Soto update",
+    "price": 4000,
+    "stock": 500
+}
+
+### get All Product
+GET http://localhost:8080/api/product
+Content-Type: application/octet-stream
+Accept: application/json
+
+### get Detail Product
+GET http://localhost:8080/api/product/2
+Content-Type: application/octet-stream
+Accept: application/json
