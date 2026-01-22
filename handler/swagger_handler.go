@@ -1,9 +1,12 @@
 package handler
 
 import (
+	_ "embed"
 	"net/http"
-	"os"
 )
+
+//go:embed swagger.json
+var swaggerSpec []byte
 
 func SwaggerUI(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -12,16 +15,9 @@ func SwaggerUI(w http.ResponseWriter, r *http.Request) {
 }
 
 func SwaggerSpec(w http.ResponseWriter, r *http.Request) {
-	data, err := os.ReadFile("swagger.json")
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		_, _ = w.Write([]byte("{\"error\":\"failed to load swagger spec\"}"))
-		return
-	}
-
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
-	_, _ = w.Write(data)
+	_, _ = w.Write(swaggerSpec)
 }
 
 const swaggerHTML = `<!doctype html>
