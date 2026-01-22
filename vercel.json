@@ -4,7 +4,9 @@
     { "src": "api/index.go", "use": "@vercel/go" }
   ],
   "routes": [
+    { "src": "/", "dest": "/api" },
     { "src": "/health", "dest": "/api" },
+    { "src": "/swagger.json", "dest": "/api" },
     { "src": "/api/(.*)", "dest": "/api" }
   ]
 }

@@ -7,7 +7,9 @@ import (
 )
 
 func main() {
+	http.HandleFunc("/", handler.SwaggerUI)
 	http.HandleFunc("/health", handler.Health)
+	http.HandleFunc("/swagger.json", handler.SwaggerSpec)
 
 	http.HandleFunc("/api/product", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {

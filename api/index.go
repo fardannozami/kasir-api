@@ -8,7 +8,9 @@ import (
 var mux = http.NewServeMux()
 
 func init() {
+	mux.HandleFunc("/", handler.SwaggerUI)
 	mux.HandleFunc("/health", handler.Health)
+	mux.HandleFunc("/swagger.json", handler.SwaggerSpec)
 
 	mux.HandleFunc("/api/product", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {

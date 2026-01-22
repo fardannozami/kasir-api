@@ -5,7 +5,7 @@ REST API sederhana untuk manajemen produk dan kategori (in-memory).
 ## Base URL
 
 - Lokal: `http://localhost:8080`
-- Vercel: `https://<your-app>.vercel.app`
+- Vercel: `https://kasir-api-seven.vercel.app`
 
 ## Menjalankan Lokal
 
