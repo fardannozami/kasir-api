@@ -34,3 +34,38 @@ Accept: application/json
 DELETE  http://localhost:8080/api/product/4
 Content-Type: application/octet-stream
 Accept: application/json
+
+### Create Category
+POST http://localhost:8080/api/category
+Content-Type: application/octet-stream
+Accept: application/json
+
+{
+    "name": "Pakaian",
+    "description": "baju dan celana"
+}
+
+### Update Category
+PUT http://localhost:8080/api/category/3
+Content-Type: application/octet-stream
+Accept: application/json
+
+{
+    "name": "Pakaian Pria",
+    "description": "pakaian pria"
+}
+
+### get All Category
+GET http://localhost:8080/api/category
+Content-Type: application/octet-stream
+Accept: application/json
+
+### get Detail Category
+GET http://localhost:8080/api/category/3
+Content-Type: application/octet-stream
+Accept: application/json
+
+### delete Category
+DELETE  http://localhost:8080/api/category/3
+Content-Type: application/octet-stream
+Accept: application/json
