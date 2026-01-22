@@ -10,7 +10,7 @@ Accept: application/json
 }
 
 ### Update Product
-PUT http://localhost:8080/api/product/2
+PUT http://localhost:8080/api/product/3
 Content-Type: application/octet-stream
 Accept: application/json
 
@@ -26,11 +26,11 @@ Content-Type: application/octet-stream
 Accept: application/json
 
 ### get Detail Product
-GET http://localhost:8080/api/product/2
+GET http://localhost:8080/api/product/0
 Content-Type: application/octet-stream
 Accept: application/json
 
 ### delete Product
-DELETE  http://localhost:8080/api/product/2
+DELETE  http://localhost:8080/api/product/4
 Content-Type: application/octet-stream
 Accept: application/json
