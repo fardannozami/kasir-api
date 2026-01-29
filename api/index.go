@@ -1,67 +1,48 @@
 package handler
 
 import (
-	"kasir-api/handler"
+	"kasir-api/config"
+	"kasir-api/database"
+	"kasir-api/handlers"
+	"kasir-api/repositories"
+	"kasir-api/services"
+	"log"
 	"net/http"
+	"os"
+	"strings"
+
+	"github.com/spf13/viper"
 )
 
-var mux = http.NewServeMux()
+func main() {
+	viper.AutomaticEnv()
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
-func init() {
-	mux.HandleFunc("/", handler.SwaggerUI)
-	mux.HandleFunc("/health", handler.Health)
-	mux.HandleFunc("/swagger.json", handler.SwaggerSpec)
+	if _, err := os.Stat(".env"); err == nil {
+		viper.SetConfigFile(".env")
+		viper.ReadInConfig()
+	}
 
-	mux.HandleFunc("/api/product", func(w http.ResponseWriter, r *http.Request) {
-		switch r.Method {
-		case http.MethodGet:
-			handler.GetProducts(w, r)
-		case http.MethodPost:
-			handler.CreateProduct(w, r)
-		default:
-			w.WriteHeader(http.StatusMethodNotAllowed)
-		}
-	})
+	config := config.Config{
+		Port:   viper.GetString("PORT"),
+		DBConn: viper.GetString("DB_CONN"),
+	}
 
-	mux.HandleFunc("/api/product/", func(w http.ResponseWriter, r *http.Request) {
-		switch r.Method {
-		case http.MethodGet:
-			handler.GetProductById(w, r)
-		case http.MethodPut:
-			handler.UpdateProduct(w, r)
-		case http.MethodDelete:
-			handler.DeleteProduct(w, r)
-		default:
-			w.WriteHeader(http.StatusMethodNotAllowed)
-		}
-	})
+	// setup database
+	db, err := database.InitDB(config.DBConn)
+	if err != nil {
+		log.Fatal("Failed to connect database", err)
+	}
 
-	mux.HandleFunc("/api/category", func(w http.ResponseWriter, r *http.Request) {
-		switch r.Method {
-		case http.MethodGet:
-			handler.GetCategories(w, r)
-		case http.MethodPost:
-			handler.CreateCategory(w, r)
-		default:
-			w.WriteHeader(http.StatusMethodNotAllowed)
-		}
-	})
+	defer db.Close()
 
-	mux.HandleFunc("/api/category/", func(w http.ResponseWriter, r *http.Request) {
-		switch r.Method {
-		case http.MethodGet:
-			handler.GetCategoryById(w, r)
-		case http.MethodPut:
-			handler.UpdateCategory(w, r)
-		case http.MethodDelete:
-			handler.DeleteCategory(w, r)
-		default:
-			w.WriteHeader(http.StatusMethodNotAllowed)
-		}
-	})
-}
+	// setup routes
+	productRepository := repositories.NewProductRepository(db)
+	productService := services.NewProductService(productRepository)
+	productHandler := handlers.NewProductHandler(productService)
+	http.HandleFunc("/api/product", productHandler.HandleProducts)
+	http.HandleFunc("/api/product/", productHandler.HandleProductByID)
 
-// Handler is the Vercel entrypoint.
-func Handler(w http.ResponseWriter, r *http.Request) {
-	mux.ServeHTTP(w, r)
+	log.Println("🚀 server running at", config.Port)
+	log.Fatal(http.ListenAndServe(":"+config.Port, nil))
 }

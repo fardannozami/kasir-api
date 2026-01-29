@@ -4,20 +4,22 @@ Content-Type: application/octet-stream
 Accept: application/json
 
 {
-    "name": "Soto",
+    "name": "Mie Ayam",
     "price": 3000,
-    "stock": 200
+    "stock": 200,
+    "category_id": 1
 }
 
 ### Update Product
-PUT http://localhost:8080/api/product/3
+PUT http://localhost:8080/api/product/1
 Content-Type: application/octet-stream
 Accept: application/json
 
 {
     "name": "Soto update",
     "price": 4000,
-    "stock": 500
+    "stock": 500,
+    "category_id": 1
 }
 
 ### get All Product
@@ -26,12 +28,12 @@ Content-Type: application/octet-stream
 Accept: application/json
 
 ### get Detail Product
-GET http://localhost:8080/api/product/0
+GET http://localhost:8080/api/product/1
 Content-Type: application/octet-stream
 Accept: application/json
 
 ### delete Product
-DELETE  http://localhost:8080/api/product/4
+DELETE  http://localhost:8080/api/product/1
 Content-Type: application/octet-stream
 Accept: application/json
 
