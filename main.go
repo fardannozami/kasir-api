@@ -46,6 +46,10 @@ func main() {
 	categoryService := services.NewCategoryService(categoryRepository)
 	productHandler := handlers.NewProductHandler(productService)
 	categoryHandler := handlers.NewCategoryHandler(categoryService)
+
+	http.HandleFunc("/", handlers.SwaggerUI)
+	http.HandleFunc("/health", handlers.Health)
+	http.HandleFunc("/swagger.json", handlers.SwaggerSpec)
 	http.HandleFunc("/api/product", productHandler.HandleProducts)
 	http.HandleFunc("/api/product/", productHandler.HandleProductByID)
 	http.HandleFunc("/api/category", categoryHandler.HandleCategorys)
