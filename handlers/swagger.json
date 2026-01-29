@@ -3,20 +3,33 @@
   "info": {
     "title": "Kasir API",
     "version": "1.0.0",
-    "description": "REST API sederhana untuk manajemen produk dan kategori (in-memory)."
+    "description": "REST API sederhana untuk manajemen produk dan kategori (PostgreSQL)."
   },
   "servers": [
-    { "url": "https://kasir-api-seven.vercel.app" }
+    {
+      "url": "http://localhost:8081"
+    },
+    {
+      "url": "https://kasir-api-seven.vercel.app"
+    }
   ],
   "tags": [
-    { "name": "Health" },
-    { "name": "Products" },
-    { "name": "Categories" }
+    {
+      "name": "Health"
+    },
+    {
+      "name": "Products"
+    },
+    {
+      "name": "Categories"
+    }
   ],
   "paths": {
     "/health": {
       "get": {
-        "tags": ["Health"],
+        "tags": [
+          "Health"
+        ],
         "summary": "Health check",
         "responses": {
           "200": {
@@ -26,10 +39,14 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "string" }
+                    "status": {
+                      "type": "string"
+                    }
                   }
                 },
-                "example": { "status": "ok" }
+                "example": {
+                  "status": "ok"
+                }
               }
             }
           }
@@ -38,7 +55,9 @@
     },
     "/api/product": {
       "get": {
-        "tags": ["Products"],
+        "tags": [
+          "Products"
+        ],
         "summary": "Get all products",
         "responses": {
           "200": {
@@ -47,7 +66,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Product" }
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
                 }
               }
             }
@@ -55,14 +76,23 @@
         }
       },
       "post": {
-        "tags": ["Products"],
+        "tags": [
+          "Products"
+        ],
         "summary": "Create product",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/ProductInput" },
-              "example": { "name": "Beras", "price": 15000, "stock": 20 }
+              "schema": {
+                "$ref": "#/components/schemas/ProductInput"
+              },
+              "example": {
+                "name": "Beras",
+                "price": 15000,
+                "stock": 20,
+                "category_id": 1
+              }
             }
           }
         },
@@ -71,7 +101,9 @@
             "description": "Created",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Product" }
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
               }
             }
           }
@@ -84,18 +116,24 @@
           "name": "id",
           "in": "path",
           "required": true,
-          "schema": { "type": "integer" }
+          "schema": {
+            "type": "integer"
+          }
         }
       ],
       "get": {
-        "tags": ["Products"],
+        "tags": [
+          "Products"
+        ],
         "summary": "Get product by ID",
         "responses": {
           "200": {
             "description": "Product",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Product" }
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
               }
             }
           },
@@ -103,8 +141,12 @@
             "description": "Invalid ID",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "invalid id" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "invalid id"
+                }
               }
             }
           },
@@ -112,22 +154,34 @@
             "description": "Not found",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "product not found" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "product not found"
+                }
               }
             }
           }
         }
       },
       "put": {
-        "tags": ["Products"],
+        "tags": [
+          "Products"
+        ],
         "summary": "Update product",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/ProductInput" },
-              "example": { "name": "Beras Premium", "price": 20000, "stock": 12 }
+              "schema": {
+                "$ref": "#/components/schemas/ProductInput"
+              },
+              "example": {
+                "name": "Beras Premium",
+                "price": 20000,
+                "stock": 12
+              }
             }
           }
         },
@@ -136,7 +190,9 @@
             "description": "Updated",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Product" }
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
               }
             }
           },
@@ -144,8 +200,12 @@
             "description": "Invalid ID",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "invalid id" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "invalid id"
+                }
               }
             }
           },
@@ -153,23 +213,33 @@
             "description": "Not found",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "product not found" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "product not found"
+                }
               }
             }
           }
         }
       },
       "delete": {
-        "tags": ["Products"],
+        "tags": [
+          "Products"
+        ],
         "summary": "Delete product",
         "responses": {
           "200": {
             "description": "Deleted",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Message" },
-                "example": { "message": "product deleted successfully" }
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                },
+                "example": {
+                  "message": "product deleted successfully"
+                }
               }
             }
           },
@@ -177,8 +247,12 @@
             "description": "Invalid ID",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "invalid id" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "invalid id"
+                }
               }
             }
           },
@@ -186,8 +260,12 @@
             "description": "Not found",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "product not found" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "product not found"
+                }
               }
             }
           }
@@ -196,7 +274,9 @@
     },
     "/api/category": {
       "get": {
-        "tags": ["Categories"],
+        "tags": [
+          "Categories"
+        ],
         "summary": "Get all categories",
         "responses": {
           "200": {
@@ -205,7 +285,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Category" }
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
                 }
               }
             }
@@ -213,14 +295,21 @@
         }
       },
       "post": {
-        "tags": ["Categories"],
+        "tags": [
+          "Categories"
+        ],
         "summary": "Create category",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CategoryInput" },
-              "example": { "name": "Sembako", "description": "Produk kebutuhan sehari-hari" }
+              "schema": {
+                "$ref": "#/components/schemas/CategoryInput"
+              },
+              "example": {
+                "name": "Sembako",
+                "description": "Produk kebutuhan sehari-hari"
+              }
             }
           }
         },
@@ -229,7 +318,9 @@
             "description": "Created",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Category" }
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
               }
             }
           }
@@ -242,18 +333,24 @@
           "name": "id",
           "in": "path",
           "required": true,
-          "schema": { "type": "integer" }
+          "schema": {
+            "type": "integer"
+          }
         }
       ],
       "get": {
-        "tags": ["Categories"],
+        "tags": [
+          "Categories"
+        ],
         "summary": "Get category by ID",
         "responses": {
           "200": {
             "description": "Category",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Category" }
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
               }
             }
           },
@@ -261,8 +358,12 @@
             "description": "Invalid ID",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "invalid id" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "invalid id"
+                }
               }
             }
           },
@@ -270,22 +371,33 @@
             "description": "Not found",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "category not found" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "category not found"
+                }
               }
             }
           }
         }
       },
       "put": {
-        "tags": ["Categories"],
+        "tags": [
+          "Categories"
+        ],
         "summary": "Update category",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CategoryInput" },
-              "example": { "name": "Sembako", "description": "Produk kebutuhan pokok" }
+              "schema": {
+                "$ref": "#/components/schemas/CategoryInput"
+              },
+              "example": {
+                "name": "Sembako",
+                "description": "Produk kebutuhan pokok"
+              }
             }
           }
         },
@@ -294,7 +406,9 @@
             "description": "Updated",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Category" }
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
               }
             }
           },
@@ -302,8 +416,12 @@
             "description": "Invalid ID",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "invalid id" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "invalid id"
+                }
               }
             }
           },
@@ -311,23 +429,33 @@
             "description": "Not found",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "category not found" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "category not found"
+                }
               }
             }
           }
         }
       },
       "delete": {
-        "tags": ["Categories"],
+        "tags": [
+          "Categories"
+        ],
         "summary": "Delete category",
         "responses": {
           "200": {
             "description": "Deleted",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Message" },
-                "example": { "message": "category deleted successfully" }
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                },
+                "example": {
+                  "message": "category deleted successfully"
+                }
               }
             }
           },
@@ -335,8 +463,12 @@
             "description": "Invalid ID",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "invalid id" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "invalid id"
+                }
               }
             }
           },
@@ -344,8 +476,12 @@
             "description": "Not found",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "category not found" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "category not found"
+                }
               }
             }
           }
@@ -358,47 +494,89 @@
       "Product": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer" },
-          "name": { "type": "string" },
-          "price": { "type": "integer" },
-          "stock": { "type": "integer" }
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "integer"
+          },
+          "stock": {
+            "type": "integer"
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          }
         }
       },
       "ProductInput": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "price": { "type": "integer" },
-          "stock": { "type": "integer" }
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "integer"
+          },
+          "stock": {
+            "type": "integer"
+          },
+          "category_id": {
+            "type": "integer"
+          }
         },
-        "required": ["name", "price", "stock"]
+        "required": [
+          "name",
+          "price",
+          "stock",
+          "category_id"
+        ]
       },
       "Category": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer" },
-          "name": { "type": "string" },
-          "description": { "type": "string" }
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
         }
       },
       "CategoryInput": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "description": { "type": "string" }
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
         },
-        "required": ["name", "description"]
+        "required": [
+          "name",
+          "description"
+        ]
       },
       "Error": {
         "type": "object",
         "properties": {
-          "error": { "type": "string" }
+          "error": {
+            "type": "string"
+          }
         }
       },
       "Message": {
         "type": "object",
         "properties": {
-          "message": { "type": "string" }
+          "message": {
+            "type": "string"
+          }
         }
       }
     }

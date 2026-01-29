@@ -1,10 +1,10 @@
 # Kasir API
 
-REST API sederhana untuk manajemen produk dan kategori (in-memory).
+REST API sederhana untuk manajemen produk dan kategori (PostgreSQL).
 
 ## Base URL
 
-- Lokal: `http://localhost:8080`
+- Lokal: `http://localhost:8081`
 - Vercel: `https://kasir-api-seven.vercel.app`
 
 ## Menjalankan Lokal
@@ -257,5 +257,5 @@ Jika ID tidak ditemukan:
 
 ## Catatan
 
-- Data disimpan di memori (bukan database), akan reset setiap restart.
+- Data disimpan di database PostgreSQL.
 - Semua response menggunakan JSON.
