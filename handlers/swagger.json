@@ -7,10 +7,10 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8081"
+      "url": "http://localhost:8080"
     },
     {
-      "url": "https://kasir-api-seven.vercel.app"
+      "url": "https://kasir-api-production-6d11.up.railway.app"
     }
   ],
   "tags": [

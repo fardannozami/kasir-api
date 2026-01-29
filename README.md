@@ -5,7 +5,7 @@ REST API sederhana untuk manajemen produk dan kategori (PostgreSQL).
 ## Base URL
 
 - Lokal: `http://localhost:8081`
-- Vercel: `https://kasir-api-seven.vercel.app`
+- railway: `https://kasir-api-production-6d11.up.railway.app`
 
 ## Menjalankan Lokal
 
