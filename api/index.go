@@ -34,14 +34,22 @@ func main() {
 		log.Fatal("Failed to connect database", err)
 	}
 
+	// run migration
+	database.RunMigration(db)
+
 	defer db.Close()
 
 	// setup routes
 	productRepository := repositories.NewProductRepository(db)
+	categoryRepository := repositories.NewCategoryRepository(db)
 	productService := services.NewProductService(productRepository)
+	categoryService := services.NewCategoryService(categoryRepository)
 	productHandler := handlers.NewProductHandler(productService)
+	categoryHandler := handlers.NewCategoryHandler(categoryService)
 	http.HandleFunc("/api/product", productHandler.HandleProducts)
 	http.HandleFunc("/api/product/", productHandler.HandleProductByID)
+	http.HandleFunc("/api/category", categoryHandler.HandleCategorys)
+	http.HandleFunc("/api/category/", categoryHandler.HandleCategoryByID)
 
 	log.Println("🚀 server running at", config.Port)
 	log.Fatal(http.ListenAndServe(":"+config.Port, nil))
