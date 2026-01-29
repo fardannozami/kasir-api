@@ -10,6 +10,26 @@ Accept: application/json
     "category_id": 1
 }
 
+### Create Category
+POST http://localhost:8080/api/category
+Content-Type: application/octet-stream
+Accept: application/json
+
+{
+    "name": "Drink",
+    "description": "minuman"
+}
+
+### Update Category
+PUT http://localhost:8080/api/category/1
+Content-Type: application/octet-stream
+Accept: application/json
+
+{
+    "name": "Makanan Update",
+    "description": "makanan"
+}
+
 ### Update Product
 PUT http://localhost:8080/api/product/1
 Content-Type: application/octet-stream
@@ -27,8 +47,18 @@ GET http://localhost:8080/api/product
 Content-Type: application/octet-stream
 Accept: application/json
 
+### get All Category
+GET http://localhost:8080/api/category
+Content-Type: application/octet-stream
+Accept: application/json
+
 ### get Detail Product
 GET http://localhost:8080/api/product/1
+Content-Type: application/octet-stream
+Accept: application/json
+
+### get Detail Category
+GET http://localhost:8080/api/category/1
 Content-Type: application/octet-stream
 Accept: application/json
 
@@ -68,6 +98,6 @@ Content-Type: application/octet-stream
 Accept: application/json
 
 ### delete Category
-DELETE  http://localhost:8080/api/category/3
+DELETE  http://localhost:8080/api/category/1
 Content-Type: application/octet-stream
 Accept: application/json
