@@ -43,7 +43,7 @@ Accept: application/json
 }
 
 ### get All Product
-GET http://localhost:8080/api/product
+GET http://localhost:8080/api/product?name=mie
 Content-Type: application/octet-stream
 Accept: application/json
 

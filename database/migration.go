@@ -54,5 +54,33 @@ func RunMigration(db *sql.DB) {
 		log.Println("Seeded default category")
 	}
 
+	// Create transactions table
+	_, err = db.Exec(`
+		CREATE TABLE IF NOT EXISTS transactions (
+			id SERIAL PRIMARY KEY,
+			total_amount INT NOT NULL,
+			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+		);
+	`)
+	if err != nil {
+		log.Fatal("Failed to create transactions table:", err)
+	}
+
+	// Create transaction_details table
+	_, err = db.Exec(`
+		CREATE TABLE IF NOT EXISTS transaction_details (
+			id SERIAL PRIMARY KEY,
+			transaction_id INT REFERENCES transactions(id) ON DELETE CASCADE,
+			product_name VARCHAR(255) NOT NULL,
+			price INT NOT NULL,
+			quantity INT NOT NULL,
+			category VARCHAR(255) NOT NULL,
+			sub_total INT NOT NULL
+		);
+	`)
+	if err != nil {
+		log.Fatal("Failed to create transaction_details table:", err)
+	}
+
 	log.Println("Migration successful")
 }

@@ -46,6 +46,10 @@ func main() {
 	categoryService := services.NewCategoryService(categoryRepository)
 	productHandler := handlers.NewProductHandler(productService)
 	categoryHandler := handlers.NewCategoryHandler(categoryService)
+	// Transaction
+	transactionRepo := repositories.NewTransactionRepository(db)
+	transactionService := services.NewTransactionService(transactionRepo)
+	transactionHandler := handlers.NewTransactionHandler(transactionService)
 
 	http.HandleFunc("/", handlers.SwaggerUI)
 	http.HandleFunc("/health", handlers.Health)
@@ -54,6 +58,7 @@ func main() {
 	http.HandleFunc("/api/product/", productHandler.HandleProductByID)
 	http.HandleFunc("/api/category", categoryHandler.HandleCategorys)
 	http.HandleFunc("/api/category/", categoryHandler.HandleCategoryByID)
+	http.HandleFunc("/api/checkout", transactionHandler.HandleCheckout) // POST
 
 	log.Println("🚀 server running at", config.Port)
 	log.Fatal(http.ListenAndServe(":"+config.Port, nil))

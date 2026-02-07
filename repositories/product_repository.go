@@ -15,20 +15,28 @@ func NewProductRepository(db *sql.DB) *ProductRepository {
 	return &ProductRepository{db: db}
 }
 
-func (repo *ProductRepository) GetAll() ([]models.Product, error) {
+func (repo *ProductRepository) GetAll(name string) ([]models.Product, error) {
 	query := `
 		SELECT
 			products.id,
 			products.name,
 			products.price,
 			products.stock,
-			categories.id as category_id,
-			categories.name as category_name
+			categories.id AS category_id,
+			categories.name AS category_name
 		FROM products
 		JOIN categories ON products.category_id = categories.id
-		ORDER BY products.id DESC
-		`
-	rows, err := repo.db.Query(query)
+	`
+
+	var args []interface{}
+	if name != "" {
+		query += " WHERE products.name ILIKE $1"
+		args = append(args, "%"+name+"%")
+	}
+
+	query += " ORDER BY products.id DESC"
+
+	rows, err := repo.db.Query(query, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +45,14 @@ func (repo *ProductRepository) GetAll() ([]models.Product, error) {
 	products := make([]models.Product, 0)
 	for rows.Next() {
 		var p models.Product
-		err := rows.Scan(&p.ID, &p.Name, &p.Price, &p.Stock, &p.Category.ID, &p.Category.Name)
+		err := rows.Scan(
+			&p.ID,
+			&p.Name,
+			&p.Price,
+			&p.Stock,
+			&p.Category.ID,
+			&p.Category.Name,
+		)
 		if err != nil {
 			return nil, err
 		}
