@@ -27,7 +27,6 @@ func TransactionModelToResponse(transaction *models.Transaction) TransactionResp
 		details[i] = TransactionDetailResponse{
 			TransactionID: transaction.ID,
 			ProductID:     detail.ProductID,
-			ProductName:   detail.ProductName,
 			Quantity:      detail.Quantity,
 			Subtotal:      detail.Subtotal,
 		}
@@ -39,4 +38,15 @@ func TransactionModelToResponse(transaction *models.Transaction) TransactionResp
 		CreatedAt:   transaction.CreatedAt,
 		Details:     details,
 	}
+}
+
+type ReportResponse struct {
+	TotalRevenue   int                    `json:"total_revenue"`
+	TotalTransaksi int                    `json:"total_transaksi"`
+	ProdukTerlaris ProdukTerlarisResponse `json:"produk_terlaris"`
+}
+
+type ProdukTerlarisResponse struct {
+	Nama       string `json:"nama"`
+	QtyTerjual int    `json:"qty_terjual"`
 }

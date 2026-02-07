@@ -59,6 +59,8 @@ func main() {
 	http.HandleFunc("/api/category", categoryHandler.HandleCategorys)
 	http.HandleFunc("/api/category/", categoryHandler.HandleCategoryByID)
 	http.HandleFunc("/api/checkout", transactionHandler.HandleCheckout) // POST
+	http.HandleFunc("/api/report/hari-ini", transactionHandler.HandleCheckout)
+	http.HandleFunc("/api/report", transactionHandler.HandleCheckout)
 
 	log.Println("🚀 server running at", config.Port)
 	log.Fatal(http.ListenAndServe(":"+config.Port, nil))

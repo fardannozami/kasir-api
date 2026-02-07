@@ -10,12 +10,11 @@ type Transaction struct {
 }
 
 type TransactionDetail struct {
-	ID            int    `json:"id"`
-	TransactionID int    `json:"transaction_id"`
-	ProductID     int    `json:"product_id"`
-	ProductName   string `json:"product_name,omitempty"`
-	Quantity      int    `json:"quantity"`
-	Subtotal      int    `json:"subtotal"`
+	ID            int `json:"id"`
+	TransactionID int `json:"transaction_id"`
+	ProductID     int `json:"product_id"`
+	Quantity      int `json:"quantity"`
+	Subtotal      int `json:"subtotal"`
 }
 
 type CheckoutItem struct {
@@ -25,4 +24,13 @@ type CheckoutItem struct {
 
 type CheckoutRequest struct {
 	Items []CheckoutItem `json:"items"`
+}
+
+type ReportData struct {
+	TotalRevenue   int
+	TotalTransaksi int
+	ProdukTerlaris struct {
+		Nama       string
+		QtyTerjual int
+	}
 }

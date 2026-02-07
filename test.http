@@ -86,7 +86,7 @@ Accept: application/json
     "items": [
         {
             "product_id": 10,
-            "quantity": 1
+            "quantity": 4
         }
     ]
 }
@@ -102,6 +102,21 @@ Accept: application/json
 }
 
 ### get All Category
+GET http://localhost:8080/api/category
+Content-Type: application/octet-stream
+Accept: application/json
+
+### get Rreport Today
+GET http://localhost:8080/api/report/hari-ini
+Content-Type: application/octet-stream
+Accept: application/json
+
+### get Rreport Today
+GET http://localhost:8080/api/report?start_date=2026-01-04&end_date=2026-02-07
+Content-Type: application/octet-stream
+Accept: application/json
+
+### get Rreport Today
 GET http://localhost:8080/api/category
 Content-Type: application/octet-stream
 Accept: application/json

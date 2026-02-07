@@ -63,10 +63,9 @@ func (repo *TransactionRepository) CreateTransaction(
 		}
 
 		details = append(details, models.TransactionDetail{
-			ProductID:   item.ProductID,
-			ProductName: productName,
-			Quantity:    item.Quantity,
-			Subtotal:    subtotal,
+			ProductID: item.ProductID,
+			Quantity:  item.Quantity,
+			Subtotal:  subtotal,
 		})
 	}
 
@@ -139,4 +138,43 @@ func buildBulkInsertDetails(
 	}
 
 	return query, args
+}
+
+func (repo *TransactionRepository) GetReportData(startDate, endDate string) (*models.ReportData, error) {
+	var report models.ReportData
+
+	// 1. Get Total Revenue and Total Transaksi
+	err := repo.db.QueryRow(`
+		SELECT COALESCE(SUM(total_amount), 0), COUNT(id)
+		FROM transactions
+		WHERE created_at::date BETWEEN $1 AND $2
+	`, startDate, endDate).Scan(&report.TotalRevenue, &report.TotalTransaksi)
+	if err != nil {
+		return nil, err
+	}
+
+	if report.TotalTransaksi == 0 {
+		return nil, fmt.Errorf("data tidak ditemukan")
+	}
+
+	// 2. Get Produk Terlaris
+	err = repo.db.QueryRow(`
+		SELECT p.name, SUM(td.quantity) as qty
+		FROM transaction_details td
+		JOIN transactions t ON td.transaction_id = t.id
+		JOIN products p ON td.product_id = p.id
+		WHERE t.created_at::date BETWEEN $1 AND $2
+		GROUP BY p.name
+		ORDER BY qty DESC
+		LIMIT 1
+	`, startDate, endDate).Scan(&report.ProdukTerlaris.Nama, &report.ProdukTerlaris.QtyTerjual)
+
+	if err == sql.ErrNoRows {
+		report.ProdukTerlaris.Nama = "-"
+		report.ProdukTerlaris.QtyTerjual = 0
+	} else if err != nil {
+		return nil, err
+	}
+
+	return &report, nil
 }

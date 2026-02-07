@@ -16,3 +16,7 @@ func NewTransactionService(repo *repositories.TransactionRepository) *Transactio
 func (s *TransactionService) Checkout(items []models.CheckoutItem) (*models.Transaction, error) {
 	return s.repo.CreateTransaction(items)
 }
+
+func (s *TransactionService) GetReport(startDate, endDate string) (*models.ReportData, error) {
+	return s.repo.GetReportData(startDate, endDate)
+}

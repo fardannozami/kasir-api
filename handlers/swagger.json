@@ -22,6 +22,9 @@
     },
     {
       "name": "Categories"
+    },
+    {
+      "name": "Reports"
     }
   ],
   "paths": {
@@ -482,6 +485,76 @@
                 },
                 "example": {
                   "error": "category not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/report/hari-ini": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get today's report",
+        "responses": {
+          "200": {
+            "description": "Today's report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Report"
+                },
+                "example": {
+                  "total_revenue": 45000,
+                  "total_transaksi": 5,
+                  "produk_terlaris": {
+                    "nama": "Indomie Goreng",
+                    "qty_terjual": 12
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/report": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get report by date range",
+        "parameters": [
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2026-01-01"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2026-02-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Report"
                 }
               }
             }
