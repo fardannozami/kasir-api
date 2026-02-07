@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"kasir-api/dto"
 	"kasir-api/models"
 	"kasir-api/services"
 	"net/http"
@@ -39,6 +40,8 @@ func (h *TransactionHandler) Checkout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	response := dto.TransactionModelToResponse(transaction)
+
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(transaction)
+	json.NewEncoder(w).Encode(response)
 }

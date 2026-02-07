@@ -77,6 +77,20 @@ Accept: application/json
     "description": "baju dan celana"
 }
 
+### Create Transaction
+POST http://localhost:8080/api/checkout
+Content-Type: application/octet-stream
+Accept: application/json
+
+{
+    "items": [
+        {
+            "product_id": 10,
+            "quantity": 1
+        }
+    ]
+}
+
 ### Update Category
 PUT http://localhost:8080/api/category/3
 Content-Type: application/octet-stream
